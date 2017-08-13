@@ -1,0 +1,1 @@
+caratula: integración con ODK Collect a través de intents y contentProvider
