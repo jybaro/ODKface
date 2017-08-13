@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <!--meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"-->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/index.css"/>
+        <title>Caratula</title>
+
+    </head>
+    <body>
+
+
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container-fluid">
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav navbar-left">
+        <li class="text-center active" id="menu_hogar"><a href="#hogar" class="noponerfoco" data-toggle="tab" aria-expanded="true"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><br />Hogar</a></li>
+        <li class="text-center" id="menu_madre"><a href="#madre" class="noponerfoco" data-toggle="tab" aria-expanded="false"><i class="fa fa-female" aria-hidden="true"></i><br />Madre</a></li>
+        <li class="text-center" id="menu_ninio"><a href="#ninio" class="noponerfoco" data-toggle="tab" aria-expanded="false"><i class="fa fa-child" aria-hidden="true"></i><br />Niño</a></li>
+      </ul>
+
+
+      <ul class="nav navbar-nav navbar-right">
+
+        <li class="dropdown pull-right">
+          <a href="#" class="text-center dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span><br/>Menu</a>
+          <ul class="dropdown-menu">
+            <li class="text-right"><a href="#enviar" class="noponerfoco" data-toggle="tab" aria-expanded="false"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Enviar</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="text-right"><a href="#respaldar" class="noponerfoco" data-toggle="tab" aria-expanded="false"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Respaldar</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="text-right"><a href="#config" class="noponerfoco" data-toggle="tab" aria-expanded="false"><span class="glyphicon glyphicon-link" aria-hidden="true"></span> Vincular formularios</span></a></li>
+          </ul>
+        </li>
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container">
+
+  <div id="myTabContent" class="tab-content">
+
+    <div class="tab-pane fade active in" id="hogar">
+
+      <h3><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <span id="hogar_titulo"></span></h3>
+      <div class="list-group" id="hogar_content"></div>
+      <a href="#" id="abrir_hogar" style="position:fixed;bottom:10px;right:10px;"><img width="60" height="60" src="img/plus.png" /></a>
+
+    </div>
+
+
+    <div class="tab-pane fade" id="madre">
+
+      <h3><i class="fa fa-female" aria-hidden="true"></i> <span id="madre_titulo"></span></h3>
+      <div class="list-group" id="madre_content"></div>
+      <a href="#" id="abrir_madre" style="position:fixed;bottom:10px;right:10px;"><img width="60" height="60" src="img/plus.png" /></a>
+
+    </div>
+
+    <div class="tab-pane fade" id="ninio">
+
+      <h3><i class="fa fa-child" aria-hidden="true"></i> <span id="ninio_titulo"></span></h3>
+      <div class="list-group" id="ninio_content"></div>
+      <a href="#" id="abrir_ninio" style="position:fixed;bottom:10px;right:10px;"><img width="60" height="60" src="img/plus.png" /></a>
+
+    </div>
+
+
+    <div class="tab-pane fade" id="enviar">
+
+      <button type="button" class="btn btn-primary" id="abrir_envios"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Enviar formularios finalizados</button>
+      <div>&nbsp;</div>
+      <div id='respaldando' class="alert alert-dismissible alert-warning"><strong><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Nota: </strong><p>Se realizará un respaldo automático previo.</p></div>
+
+    </div>
+
+
+    <div class="tab-pane fade" id="respaldar">
+
+      <button type="button" class="btn btn-primary" id="ejecutar_respaldo"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Respaldar formularios</button>
+      <div>&nbsp;</div>
+
+      <div id='respaldando' class="alert alert-dismissible alert-warning hidden"><strong>Respaldando...</strong></div>
+
+      <div id="successRespaldo" class="alert alert-dismissible alert-success hidden">
+        <!--button type="button" class="close" data-dismiss="alert">&times;</button-->
+        <strong>Los formularios e instancias fueron respaldados con éxito.</strong>
+        <p>Se generó la carpeta <span id="successRespaldoMsg"></span></p>
+      </div>
+
+      <div id="errorRespaldo" class="alert alert-dismissible alert-danger hidden">
+        <!--button type="button" class="close" data-dismiss="alert">&times;</button-->
+        <strong>Hubo un error al generar el respaldo</strong>
+        <p><strong>ERROR:</strong> <span id="errorRespaldoMsg"></span></p>
+      </div>
+
+      <div id="lista"></div>
+
+    </div>
+
+
+    <div class="tab-pane fade" id="config">
+
+      <form class="form-horizontal">
+
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="hogar_form_select"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Hogar:</label>
+          <div class="col-sm-10">
+            <select class="form-control" id="hogar_form_select"></select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="madre_form_select"><i class="fa fa-female" aria-hidden="true"></i> Madre:</label>
+          <div class="col-sm-10">
+            <select class="form-control" id="madre_form_select"></select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="ninio_form_select"><i class="fa fa-child" aria-hidden="true"></i> Niño:</label>
+          <div class="col-sm-10">
+            <select class="form-control" id="ninio_form_select"></select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-primary" id="guardar_config">
+              <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Vincular
+            </button>
+          </div>
+        </div>
+      </form>
+
+
+      <div id="successConfig" class="alert alert-dismissible alert-success hidden">
+        <!--button type="button" class="close" data-dismiss="alert">&times;</button-->
+        <strong>Vinculación realizada con éxito.</strong>
+        <!--p>Se generó la carpeta <span id="successConfigMsg"></span></p-->
+      </div>
+
+      <div id="errorConfig" class="alert alert-dismissible alert-danger hidden">
+        <!--button type="button" class="close" data-dismiss="alert">&times;</button-->
+        <strong>Hubo un error al vincular los formularios.</strong>
+        <p><strong>ERROR:</strong> <span id="errorConfigMsg"></span></p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div style="display:none;">
+  <hr>
+    <div id="log" class="alert alert-success"><strong>LOG:</strong></div>
+  <hr>
+</div>
+
+
+<div id="noHayExtApp" class="alert alert-dismissible alert-danger hidden">
+  <!--button type="button" class="close" data-dismiss="alert">&times;</button-->
+  <strong><span id="noHayExtAppNombre"></span> no ha sido detectado. </strong>
+  <p>Instale la aplicación primero.</p>
+  <p><strong>ERROR:</strong> <span id="noHayExtAppMsg"></span></p>
+</div>
+        <!-- weinre --boundHost 192.168.1.115 -->
+        <script src="http://192.168.1.115:8080/target/target-script-min.js#anonymous"></script>
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/fastclick.js"></script>
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/moment-with-locales.min.js"></script>
+
+        <script type="text/javascript" src="js/index.js"></script>
+
+        <script>
+        </script>
+
+    </body>
+</html>
