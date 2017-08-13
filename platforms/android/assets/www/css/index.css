@@ -1,0 +1,70 @@
+
+
+#menu_hogar.active > a {
+	background-color:#58bc00;
+	color:#FFF;
+}
+
+#menu_hogar > a:hover {
+	background-color:#51a300;
+	color:#ddffbf;
+}
+
+#menu_hogar > a {
+	background-color:#428400;
+	color:#aac195;
+}
+
+#hogar {
+	background-color:#e7ffd3;
+}
+
+
+
+
+#menu_madre.active > a {
+	background-color:#5b00bf;
+	color:#FFF;
+}
+
+#menu_madre > a:hover {
+	background-color:#4e00a2;
+	color:#e3c9ff;
+}
+
+#menu_madre > a {
+	background-color:#3f0084;
+	color:#af9bc4;
+}
+
+#madre{
+	background-color:#ecd3ff;
+}
+
+
+
+
+
+
+#menu_ninio.active > a {
+	background-color:#00a6c4;
+	color:#FFF;
+}
+
+#menu_ninio > a:hover {
+	background-color:#0092ad;
+	color:#c4f4ff;
+}
+
+#menu_ninio > a {
+	background-color:#007287;
+	color:#a8d5e0;
+}
+
+#ninio{
+	background-color:#d3efff;
+}
+
+.navbar li.active{
+	border-bottom:solid 5px #FFF;
+}
