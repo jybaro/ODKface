@@ -1,3 +1,6 @@
+body { 
+	padding-top: 100px;
+}
 
 
 #menu_hogar.active > a {
