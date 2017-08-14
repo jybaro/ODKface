@@ -64,3 +64,7 @@
 #ninio{
 	background-color:#d3efff;
 }
+
+.navbar li.active{
+	border-bottom:solid 5px #FFF;
+}
