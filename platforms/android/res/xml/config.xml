@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="org.paho.caratula" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="org.paho.encuestas" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
     <feature name="Whitelist">
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
@@ -30,9 +30,9 @@
     </config-file>
     <allow-intent href="market:*" />
     <icon src="res/icon.png" />
-    <name>Caratula</name>
+    <name>Encuestas</name>
     <description>
-        Interfaz para el aplicativo ODK Collect.
+        Formularios de encuestas de la OMS.
     </description>
     <author email="contacto@jybaro.com" href="https://www.jybaro.com">
         JYBARO

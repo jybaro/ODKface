@@ -34,13 +34,13 @@ var app = {
     nombreApp: 'ODK Collect',
     extApp: 'org.odk.collect.android',
     config:[],
-    tieneODK: null,
-    esSD: null,
+    tieneODK: '',
+    esSD: '',
     forms:[],
     instances:[],
     dbInstancias:null,
-    ambiente: 'desarrollo',
-    //ambiente: 'produccion',
+    //ambiente: 'desarrollo',
+    ambiente: 'produccion',
     
     // Application Constructor
     initialize: function() {
@@ -98,7 +98,7 @@ var app = {
     },
     
     receivedEvent: function() {
-        setTimeout(function(){
+        //setTimeout(function(){
             moment.locale('es');
             
             
@@ -146,7 +146,7 @@ var app = {
             });
 
             
-        }, 500);
+        //}, 500);
 
     },
     
@@ -632,7 +632,8 @@ var app = {
                 buff += '<option value="'+form.jrFormId+'" '+selected+'>'+form.displayName+'</option>';
             });
 
-            document.getElementById(tipo + '_form_select').innerHTML = buff;            
+            //document.getElementById(tipo + '_form_select').innerHTML = buff;
+            document.getElementById(tipo + '_form_optgroup').innerHTML = buff;
         });
     },
 
@@ -651,16 +652,22 @@ var app = {
                         //document.getElementById('config_content').innerHTML = (fileEntry.fullPath + ": " + this.result);
                         app.config = this.result.split(',');
                         
-                        if (app.config.length === 3) {
+                        if (app.config.length >= 3) {
                             app.config['hogar'] = app.config[0];
                             app.config['madre'] = app.config[1];
                             app.config['ninio'] = app.config[2];
+                            
+                            if (app.config.length == 5) {
+                                app.tieneODK = app.config[3];
+                                app.esSD = app.config[4];
+                            }
 
                             //document.getElementById('hogar_form').value = app.config[0];
                             //document.getElementById('madre_form').value = app.config[1];
                             
                         } else {
                             _log('XXX No hay tres valores en config.txt, primera vez');
+                            $(".navbar-left").find(".active").removeClass("active");
                             $('.navbar-nav a[href="#config"]').tab('show');
                         }
                         
@@ -748,7 +755,9 @@ var app = {
                         var config = [
                             hogar_form,
                             madre_form,
-                            ninio_form
+                            ninio_form,
+                            app.tieneODK,
+                            app.esSD
                         ];
 
                         var dataObj = new Blob([config.join()], { type: 'text/plain' });
@@ -833,7 +842,7 @@ var app = {
         var buff;
         
         
-        if (app.config && app.config.length == 3) {
+        if (app.config && app.config.length >= 3) {
             
             ['hogar', 'madre', 'ninio'].forEach(function(tipo_form){
                 if (app.forms[app.config[tipo_form]]) {
@@ -845,36 +854,42 @@ var app = {
                     //buff += '<ul>';
 
                     app.forms[app.config[tipo_form]].instances.forEach(function(instance, index){
+                        
+                        if (instance.status == 'incomplete') {
 
-                        var fecha_ultima_actualizacion = moment(parseInt(instance.date)).format('dddd D [de] MMMM [de] YYYY, HH:mm');
+                            var fecha_ultima_actualizacion = moment(parseInt(instance.date)).format('dddd D [de] MMMM [de] YYYY, HH:mm');
 
-                        function encode_utf8(s) {
-                          return unescape(encodeURIComponent(s));
-                        }
+                            function encode_utf8(s) {
+                              return unescape(encodeURIComponent(s));
+                            }
 
-                        function decode_utf8(s) {
-                          return decodeURIComponent(escape(s));
-                        }
+                            function decode_utf8(s) {
+                              return decodeURIComponent(escape(s));
+                            }
 
-                        fecha_ultima_actualizacion = decode_utf8(fecha_ultima_actualizacion);
-                        _log('XXX fecha_ultima_actualizacion', fecha_ultima_actualizacion);
+                            fecha_ultima_actualizacion = decode_utf8(fecha_ultima_actualizacion);
+                            _log('XXX fecha_ultima_actualizacion', fecha_ultima_actualizacion);
 
-                        _log(instance);
+                            _log(instance);
 
-                        var id = instance._id;
-                        var estado = (instance.status == 'incomplete') ? 'incompleto' : 'completo';
+                            var id = instance._id;
+                            var estado = (instance.status == 'incomplete') ? 'incompleto' : 'completo';
 
-                        buff += '<a href="#"' +
-                            'class="list-group-item"' +
-                            'id="editar_'+tipo_form+'"' +
-                            'onclick="app.abrirInstancia('+id+')"' +
-                          '>' +
-                            '<h4 class="list-group-item-heading">' +
-                            '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> ' +
-                            ''+instance.displayName+'</h4>' +
-                            '<p class="list-group-item-text">' +
-                            'Actualizado el '+fecha_ultima_actualizacion+', <strong>'+estado+'</strong></p>' +
-                          '</a>';
+                            buff += '<a href="#"' +
+                                'class="list-group-item"' +
+                                'id="editar_'+tipo_form+'"' +
+                                'onclick="app.abrirInstancia('+id+')"' +
+                              '>' +
+                                '<h4 class="list-group-item-heading">' +
+                                '<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> ' +
+                                ''+instance.displayName+'</h4>' +
+                                '<p class="list-group-item-text">' +
+                                //'Actualizado el '+fecha_ultima_actualizacion+', <strong>'+estado+'</strong></p>' +
+                                'Actualizado el '+fecha_ultima_actualizacion+'</p>' +
+                              '</a>';
+                          } else {
+                              _log('Instancia no desplegada por estar finalizada: ', instance);
+                          }
                     });
                     //buff += '</ul>';
 
@@ -895,7 +910,7 @@ var app = {
         var buff;
         
         
-        if (app.config && app.config.length == 3) {
+        if (app.config && app.config.length >= 3) {
             
             ['hogar', 'madre', 'ninio'].forEach(function(tipo_form){
                 if (app.forms[app.config[tipo_form]]) {
@@ -1202,6 +1217,14 @@ var app = {
     
     analizarFileSystem: function(callback) {
         _log('analizarFileSystem');
+        
+        if (app.tieneODK.trim() != '' && app.esSD.trim() != '') {
+            _log('No analiza FileSystem, ya existen valores:', app.tieneODK, app.esSD);
+            return;
+        } else {
+            _log('Proceder a analizar FileSystem, ya que no hay valores:', app.tieneODK, app.esSD);
+        }
+        
         function _error (msg, error) {
             error = error|null;
             
@@ -1717,6 +1740,22 @@ function uritester(uri) {
     });
 }
 
+(function(ambiente){
+    if (ambiente == 'desarrollo') {
+
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+
+        script.type = 'text/javascript';
+        script.src = "http://192.168.1.115:8080/target/target-script-min.js#anonymous";
+        
+        //weinre --boundHost 192.168.1.115
+
+        head.appendChild(script);
+    }
+})(app.ambiente);
+
+
 app.initialize();
 //AndroidExtraFilesystems: files,files-external,documents,sdcard,cache,cache-external,assets,root
 //<preference name="AndroidPersistentFileLocation" value="Compatibility" />
@@ -1762,3 +1801,5 @@ function _log(){
     }
 }
 _log('prueba');
+
+
