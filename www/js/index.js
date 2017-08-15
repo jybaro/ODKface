@@ -153,6 +153,8 @@ var app = {
     
 
     abrirEnvios: function(){
+        _log('abrirEnvios');
+        
         app.ejecutarRespaldo();
         
         var sApp = startApp.set({ 
@@ -1219,7 +1221,8 @@ var app = {
         _log('analizarFileSystem');
         
         if (app.tieneODK.trim() != '' && app.esSD.trim() != '') {
-            _log('No analiza FileSystem, ya existen valores:', app.tieneODK, app.esSD);
+            _log('No analiza FileSystem, ejecuta callback y sale, ya existen valores:', app.tieneODK, app.esSD);
+            callback();
             return;
         } else {
             _log('Proceder a analizar FileSystem, ya que no hay valores:', app.tieneODK, app.esSD);
